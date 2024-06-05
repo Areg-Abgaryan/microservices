@@ -1,0 +1,78 @@
+plugins {
+    id ('org.springframework.boot') version "3.3.0"
+    id ("io.spring.dependency-management") version "1.1.5"
+    id ('java')
+}
+
+group 'com.areg.microservices'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+springBoot {
+    mainClass = 'com.areg.microservices.access_control_service.AccessControlApplication'
+}
+
+// Define a custom output directory for the JAR file
+tasks.build.dependsOn bootJar
+bootJar {
+    archiveFileName = "access_control-1.0-SNAPSHOT.jar"
+    destinationDirectory = file("./build/libs")
+}
+
+dependencies {
+    //  Spring Boot
+    implementation ('org.springframework.boot:spring-boot-starter-web:3.2.5')
+    //  Spring Data JPA
+    implementation ('org.springframework.boot:spring-boot-starter-data-jpa:3.2.5')
+    //  Spring AOP
+    implementation ('org.springframework.boot:spring-boot-starter-aop:3.2.5')
+    //  Spring Mail
+    implementation ('org.springframework.boot:spring-boot-starter-mail:3.2.5')
+    //  Spring Security
+    implementation ('org.springframework.security:spring-security-core:6.2.4')
+
+    //  Lombok
+    annotationProcessor ('org.projectlombok:lombok:1.18.30')
+    compileOnly ('org.projectlombok:lombok:1.18.30')
+
+    //  Postgres
+    implementation ('org.postgresql:postgresql:42.7.2')
+
+    //  Jakarta Validation
+    implementation ('jakarta.validation:jakarta.validation-api:3.1.0-M1')
+
+    //  JWT Token
+    implementation ('io.jsonwebtoken:jjwt-api:0.12.5')
+    implementation ('io.jsonwebtoken:jjwt-impl:0.12.5')
+    implementation ('io.jsonwebtoken:jjwt-jackson:0.12.5')
+
+    //  Apache Shiro
+    implementation ('org.apache.shiro:shiro-core:2.0.0-alpha-4:jakarta')
+    //  Some of Shiro's Jakarta-classified dependencies depend on the non-Jakarta variant of modules, so we have to do some juggling with exclusions
+    implementation ('org.apache.shiro:shiro-spring:2.0.0-alpha-4:jakarta') {
+        exclude group: 'org.apache.shiro', module: 'shiro-core'
+        exclude group: 'org.apache.shiro', module: 'shiro-web'
+    }
+    implementation ('org.apache.shiro:shiro-web:2.0.0-alpha-4:jakarta') {
+        exclude group: 'org.apache.shiro', module: 'shiro-core'
+    }
+
+    //  Liquibase
+    implementation ('org.liquibase:liquibase-core:4.27.0')
+
+    //  Swagger
+    implementation ('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0')
+
+    //  JUnit 5
+    testImplementation ('org.junit.jupiter:junit-jupiter-api:5.10.2')
+
+    //  Other
+    implementation ('org.apache.commons:commons-lang3:3.14.0')
+}
+
+test {
+    useJUnitPlatform()
+}
