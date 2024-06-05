@@ -1,0 +1,54 @@
+/**
+ * Copyright (c) 2024 Areg Abgaryan
+ */
+
+package com.areg.microservices.access_control_service.security.shiro;
+
+import com.areg.microservices.access_control_service.controllers.EndpointsConstants;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ShiroConfig {
+
+    @Bean
+    public DefaultWebSecurityManager securityManager() {
+        final var securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(createRealm());
+        return securityManager;
+    }
+
+    @Bean
+    public ShiroRealm createRealm() {
+        return new ShiroRealm();
+    }
+
+    //  FIXME !! Move to spring security and handle all the permissions check here :
+    @Bean
+    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+        final var chainDefinition = new DefaultShiroFilterChainDefinition();
+
+        //  These paths should be accessible without requiring authentication.
+        chainDefinition.addPathDefinition(EndpointsConstants.API_ACCESS_CONTROL, "anon");
+        chainDefinition.addPathDefinition(EndpointsConstants.LOGIN, "anon");
+
+        chainDefinition.addPathDefinition(EndpointsConstants.LOGOUT, "logout");
+        return chainDefinition;
+    }
+
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager, ShiroFilterChainDefinition chainDefinition) {
+        final var shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setLoginUrl(EndpointsConstants.LOGIN);
+        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(chainDefinition.getFilterChainMap());
+        return shiroFilterFactoryBean;
+    }
+}
