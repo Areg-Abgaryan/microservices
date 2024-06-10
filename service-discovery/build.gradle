@@ -1,0 +1,35 @@
+plugins {
+    id ('org.springframework.boot') version "3.3.0"
+    id ("io.spring.dependency-management") version "1.1.5"
+    id ('java')
+}
+
+group 'com.areg.microservices'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+springBoot {
+    mainClass = 'com.areg.microservices.notifications_service.ServiceDiscoveryApplication'
+}
+
+// Define a custom output directory for the JAR file
+tasks.build.dependsOn bootJar
+bootJar {
+    archiveFileName = "service_discovery_1.0-SNAPSHOT.jar"
+    destinationDirectory = file("./build/libs")
+}
+
+dependencies {
+    //  Spring Boot
+    implementation ('org.springframework.boot:spring-boot-starter-web:3.3.0')
+
+    //  Swagger
+    implementation ('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0')
+}
+
+test {
+    useJUnitPlatform()
+}
