@@ -18,7 +18,7 @@ springBoot {
 // Define a custom output directory for the JAR file
 tasks.build.dependsOn bootJar
 bootJar {
-    archiveFileName = "access_control-1.0-SNAPSHOT.jar"
+    archiveFileName = "access-control-service-1.0-SNAPSHOT.jar"
     destinationDirectory = file("./build/libs")
 }
 
@@ -33,6 +33,8 @@ dependencies {
     implementation ('org.springframework.boot:spring-boot-starter-mail:3.2.5')
     //  Spring Security
     implementation ('org.springframework.security:spring-security-core:6.2.4')
+    //  Spring Cloud Netflix Eureka Client
+    implementation ('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.2')
 
     //  Lombok
     annotationProcessor ('org.projectlombok:lombok:1.18.30')

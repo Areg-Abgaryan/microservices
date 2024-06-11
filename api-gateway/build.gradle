@@ -12,20 +12,19 @@ repositories {
 }
 
 springBoot {
-    mainClass = 'com.areg.microservices.notifications_service.ApiGatewayApplication'
+    mainClass = 'com.areg.microservices.api_gateway.ApiGatewayApplication'
 }
 
 // Define a custom output directory for the JAR file
 tasks.build.dependsOn bootJar
 bootJar {
-    archiveFileName = "api_gateway-1.0-SNAPSHOT.jar"
+    archiveFileName = "api-gateway-1.0-SNAPSHOT.jar"
     destinationDirectory = file("./build/libs")
 }
 
 dependencies {
     //  Spring Boot
     implementation ('org.springframework.boot:spring-boot-starter-web:3.3.0')
-
     //  Spring Cloud Netflix Eureka Client
     implementation ( 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.2')
 

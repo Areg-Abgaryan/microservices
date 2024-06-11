@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * Notifications Application
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  */
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EntityScan(basePackages = "com.areg.microservices.notifications_service")
 @OpenAPIDefinition(
         info = @Info(title = "Notifications Microservice", version = "1.0.0",

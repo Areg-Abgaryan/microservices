@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * Service Discovery Application
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  */
 
 @SpringBootApplication
+@EnableEurekaServer
 @EntityScan(basePackages = "com.areg.microservices.service_discovery")
 @OpenAPIDefinition(
         info = @Info(title = "Service Discovery Microservice", version = "1.0.0",

@@ -12,19 +12,23 @@ repositories {
 }
 
 springBoot {
-    mainClass = 'com.areg.microservices.notifications_service.ServiceDiscoveryApplication'
+    mainClass = 'com.areg.microservices.service_discovery.ServiceDiscoveryApplication'
 }
 
 // Define a custom output directory for the JAR file
 tasks.build.dependsOn bootJar
 bootJar {
-    archiveFileName = "service_discovery_1.0-SNAPSHOT.jar"
+    archiveFileName = "service-discovery-1.0-SNAPSHOT.jar"
     destinationDirectory = file("./build/libs")
 }
 
 dependencies {
     //  Spring Boot
     implementation ('org.springframework.boot:spring-boot-starter-web:3.3.0')
+    //  Spring Cloud Netflix Eureka Server
+    implementation ("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.1.2") {
+        exclude group: 'com.sun.jersey'
+    }
 
     //  Swagger
     implementation ('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0')

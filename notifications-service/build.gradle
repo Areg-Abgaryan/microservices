@@ -18,13 +18,15 @@ springBoot {
 // Define a custom output directory for the JAR file
 tasks.build.dependsOn bootJar
 bootJar {
-    archiveFileName = "notifications-1.0-SNAPSHOT.jar"
+    archiveFileName = "notifications-service-1.0-SNAPSHOT.jar"
     destinationDirectory = file("./build/libs")
 }
 
 dependencies {
     //  Spring Boot
     implementation ('org.springframework.boot:spring-boot-starter-web:3.3.0')
+    //  Spring Cloud Netflix Eureka Server
+    implementation ('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.2')
 
     //  Lombok
     annotationProcessor ('org.projectlombok:lombok:1.18.30')
